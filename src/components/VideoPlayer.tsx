@@ -179,55 +179,65 @@ function VideoPlayer() {
         autoPlay>
         <source src={link} type="video/mp4" />
       </Video>
-      <ControlerCon>
-        <Controler>
-          <RunnerCon>
-            <RunnerRoad ref={roadRef}>
-              <PassedWay style={{ width: `${roadLenght}%` }}>
-                <Runner></Runner>
-              </PassedWay>
-              <FrontRoad></FrontRoad>
-            </RunnerRoad>
-          </RunnerCon>
-          <PlayerButtonCon>
-            <LeftSideCon>
-              <LeftInnerCon>
-                <SeekButton onClick={seekLeft}>
-                  <SeekLeft />
-                </SeekButton>
-                <PlayPause onClick={playPause}>
-                  {isPause ? <PlayIcon /> : <PauseIcon />}
-                </PlayPause>
-                <SeekButton onClick={seekRight}>
-                  <SeekRight />
-                </SeekButton>
-              </LeftInnerCon>
-              <VolumeCon>
-                <VolumeButton onClick={volumeClick}>
-                  {volume > 0 ? <VolumeIcon /> : <MuteIcon />}
-                </VolumeButton>
-                <VolumeRange
-                  gradValue={volume}
-                  value={volume}
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="5"
-                  onChange={volumeChange}
-                />
-              </VolumeCon>
-              <TimeCon>
-                <Time>{convert(currentTime)}</Time>/
-                <Time>{convert(videoDuration)}</Time>
-              </TimeCon>
-            </LeftSideCon>
-            <RightSideCon>
-              <FullScrBtn onClick={fullScreenPlayer}>
-                {isFullScreen ? <MinimiseScreen /> : <FullScreen />}
-              </FullScrBtn>
-            </RightSideCon>
-          </PlayerButtonCon>
-        </Controler>
+      <ControlerCon
+        onMouseEnter={() => {
+          setIsShowControl(true);
+        }}
+        onMouseLeave={() => {
+          setIsShowControl(false);
+        }}>
+        {isShowControl ? (
+          <Controler>
+            <RunnerCon>
+              <RunnerRoad ref={roadRef}>
+                <PassedWay style={{ width: `${roadLenght}%` }}>
+                  <Runner></Runner>
+                </PassedWay>
+                <FrontRoad></FrontRoad>
+              </RunnerRoad>
+            </RunnerCon>
+            <PlayerButtonCon>
+              <LeftSideCon>
+                <LeftInnerCon>
+                  <SeekButton onClick={seekLeft}>
+                    <SeekLeft />
+                  </SeekButton>
+                  <PlayPause onClick={playPause}>
+                    {isPause ? <PlayIcon /> : <PauseIcon />}
+                  </PlayPause>
+                  <SeekButton onClick={seekRight}>
+                    <SeekRight />
+                  </SeekButton>
+                </LeftInnerCon>
+                <VolumeCon>
+                  <VolumeButton onClick={volumeClick}>
+                    {volume > 0 ? <VolumeIcon /> : <MuteIcon />}
+                  </VolumeButton>
+                  <VolumeRange
+                    gradValue={volume}
+                    value={volume}
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="5"
+                    onChange={volumeChange}
+                  />
+                </VolumeCon>
+                <TimeCon>
+                  <Time>{convert(currentTime)}</Time>/
+                  <Time>{convert(videoDuration)}</Time>
+                </TimeCon>
+              </LeftSideCon>
+              <RightSideCon>
+                <FullScrBtn onClick={fullScreenPlayer}>
+                  {isFullScreen ? <MinimiseScreen /> : <FullScreen />}
+                </FullScrBtn>
+              </RightSideCon>
+            </PlayerButtonCon>
+          </Controler>
+        ) : (
+          ""
+        )}
       </ControlerCon>
     </Player>
   );
