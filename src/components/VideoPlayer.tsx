@@ -141,11 +141,11 @@ function VideoPlayer() {
 
   const [volume, setVolume] = useState(50);
 
-  let isLoad = false;
+  let isLoad = useRef(false);
   useEffect(() => {
     videoRef.current?.addEventListener("canplay", () => {
       setVideoDuration(videoRef.current?.duration);
-      isLoad = true;
+      isLoad.current = true;
     });
   }, []);
 
