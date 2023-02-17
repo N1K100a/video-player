@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import lowVideo from "../assets/videos/low-360.mp4";
 
 import SeekLeft from "../assets/SeekLeft";
 import SeekRight from "../assets/SeekRight";
@@ -86,6 +85,7 @@ function VideoPlayer() {
   roadRef.current?.addEventListener("mouseup", touchEnd);
   roadRef.current?.addEventListener("mouseleave", touchEnd);
   roadRef.current?.addEventListener("mousemove", touchMove);
+
   const playerRef = useRef<HTMLDivElement>(null);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
