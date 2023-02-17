@@ -128,22 +128,29 @@ function VideoPlayer() {
 
   videoRef.current?.addEventListener("click", playPause);
   const handleKeyDown = (event: any) => {
-    console.log("wwwww");
-    if (event.keyCode === 39) {
-      seekRight();
-    }
-    if (event.keyCode === 37) {
-      seekLeft();
+    if (isLoad) {
+      console.log("wwwww");
+      if (event.keyCode === 39) {
+        seekRight();
+      }
+      if (event.keyCode === 37) {
+        seekLeft();
+      }
     }
   };
 
   const [volume, setVolume] = useState(50);
 
+  let isLoad = false;
   useEffect(() => {
     videoRef.current?.addEventListener("canplay", () => {
       setVideoDuration(videoRef.current?.duration);
-      window.addEventListener("keydown", handleKeyDown);
+      isLoad = true;
     });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
   }, []);
 
   const [isShowControl, setIsShowControl] = useState(false);
