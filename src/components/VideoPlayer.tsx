@@ -154,7 +154,7 @@ function VideoPlayer() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isLoad.current]);
+  });
 
   const [isShowControl, setIsShowControl] = useState(false);
 
