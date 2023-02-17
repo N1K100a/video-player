@@ -128,7 +128,7 @@ function VideoPlayer() {
 
   videoRef.current?.addEventListener("click", playPause);
   const handleKeyDown = (event: any) => {
-    if (isLoad) {
+    if (isLoad.current) {
       console.log("wwwww");
       if (event.keyCode === 39) {
         seekRight();
