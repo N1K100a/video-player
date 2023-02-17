@@ -9,7 +9,7 @@ function VolumeIcon() {
       stroke="#ffffff"
       fill="none"
       className="duration-300 transform transition-all"
-      style={{ width: "48px", height: "48px" }}>
+      style={{ width: "30px", height: "30px" }}>
       <path
         d="M37 50l-13.71-9.87h-8.4V24.8h7.55L37 15.6a.39.39 0 01.59.33v33.75A.4.4 0 0137 50z"
         strokeLinecap="square"></path>

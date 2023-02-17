@@ -10,7 +10,9 @@ import PauseIcon from "../assets/PauseIcon";
 
 import MuteIcon from "../assets/MuteIcon";
 import VolumeIcon from "../assets/VolumeIcon";
-import { error } from "console";
+
+import FullScreen from "../assets/FullScreen";
+import MinimiseScreen from "../assets/MinimiseScreen";
 
 function VideoPlayer() {
   const link =
@@ -49,6 +51,7 @@ function VideoPlayer() {
   let clickX: number, currentLenght;
 
   let isClicking = false;
+
   const forward = () => {
     currentLenght = roadBound ? clickX / roadBound.width : 0;
     if (typeof videoRef.current?.currentTime === "number") {
@@ -62,6 +65,7 @@ function VideoPlayer() {
     clickX = getPositionX(e);
     isClicking = true;
     forward();
+    e.preventDefault();
   };
   const touchMove = (e: any) => {
     if (isClicking) {
@@ -97,8 +101,6 @@ function VideoPlayer() {
       }
     }
   };
-
-  videoRef.current?.addEventListener("dblclick", fullScreenPlayer);
 
   const seekRight = () => {
     if (typeof videoRef.current?.currentTime === "number") {
@@ -151,14 +153,18 @@ function VideoPlayer() {
   };
 
   const volumeClick = () => {
-    setVolume(0);
+    if (volume > 0) {
+      setVolume(0);
+    } else {
+      setVolume(50);
+    }
   };
 
   if (typeof videoRef.current?.volume === "number") {
     videoRef.current.volume = volume / 100;
   }
 
-  console.log(volume);
+  console.log("n");
   return (
     <Player ref={playerRef}>
       <Video
@@ -180,6 +186,7 @@ function VideoPlayer() {
               <PassedWay style={{ width: `${roadLenght}%` }}>
                 <Runner></Runner>
               </PassedWay>
+              <FrontRoad></FrontRoad>
             </RunnerRoad>
           </RunnerCon>
           <PlayerButtonCon>
@@ -197,7 +204,7 @@ function VideoPlayer() {
               </LeftInnerCon>
               <VolumeCon>
                 <VolumeButton onClick={volumeClick}>
-                  <MuteIcon />
+                  {volume > 0 ? <VolumeIcon /> : <MuteIcon />}
                 </VolumeButton>
                 <VolumeRange
                   gradValue={volume}
@@ -214,7 +221,11 @@ function VideoPlayer() {
                 <Time>{convert(videoDuration)}</Time>
               </TimeCon>
             </LeftSideCon>
-            <RightSideCon>1</RightSideCon>
+            <RightSideCon>
+              <FullScrBtn onClick={fullScreenPlayer}>
+                {isFullScreen ? <MinimiseScreen /> : <FullScreen />}
+              </FullScrBtn>
+            </RightSideCon>
           </PlayerButtonCon>
         </Controler>
       </ControlerCon>
@@ -255,7 +266,7 @@ const Controler = styled.div`
 const RunnerCon = styled.div`
   width: 100%;
   height: 25px;
-  padding: 0 20px;
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -281,29 +292,37 @@ const Time = styled.div`
 `;
 
 const RunnerRoad = styled.div`
-  height: 5px;
+  height: 25px;
+  padding: 10px 0;
   width: 100%;
-  background-color: aqua;
-  margin: 0 10px;
-  border-radius: 3px;
+  display: flex;
+
   cursor: pointer;
 `;
 
 const PassedWay = styled.div`
   height: 100%;
-  width: 150px;
-  background-color: burlywood;
+  background-color: white;
   display: flex;
   flex-direction: row-reverse;
   border-radius: 3px;
   align-items: center;
   user-select: none;
+  flex-shrink: 0;
+`;
+
+const FrontRoad = styled.div`
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+
+  background-color: #8395a7;
 `;
 
 const Runner = styled.div`
   height: 10px;
   width: 10px;
-  background-color: #64ed72;
+  background-color: white;
   transform: translateX(50%);
   border-radius: 50%;
   flex-shrink: 0;
@@ -391,10 +410,27 @@ const VolumeRange = styled.input<rangeProps>`
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background-color: white;
     cursor: pointer;
+  }
+`;
+
+const FullScrBtn = styled.button`
+  height: 30px;
+  width: 30px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transform: scale(0.9);
   }
 `;
