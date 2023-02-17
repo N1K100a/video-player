@@ -151,6 +151,9 @@ function VideoPlayer() {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const [isShowControl, setIsShowControl] = useState(false);
