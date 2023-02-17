@@ -150,10 +150,12 @@ function VideoPlayer() {
   }, []);
 
   useEffect(() => {
+    /*eslint-disable */
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    /*eslint-enable */
   }, []);
 
   const [isShowControl, setIsShowControl] = useState(false);
